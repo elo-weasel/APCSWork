@@ -11,7 +11,7 @@ class Factorial{
     return result;
   }
   public static void testFactorial(int n, int expected){
-    System.out.println("expected: " + expected + " result: " + factorial(n));
+    System.out.println("factorial: " + n + ", expected: " + expected + " result: " + factorial(n));
     if(factorial(n) == expected){
       System.out.println(":)");
     }else{

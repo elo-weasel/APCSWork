@@ -23,7 +23,7 @@ class StringMatch{
   }
   public static void testStringMatch(String a, String b, int expected){
     int r = stringMatch(a, b);
-    System.out.println("expected: " + expected + " result: " + r);
+    System.out.println("matches between: " + a + " and " + b + ", expected: " + expected + " result: " + r);
     if(r == expected){
       System.out.println(":)");
     }else{

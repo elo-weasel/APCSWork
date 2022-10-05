@@ -11,7 +11,7 @@ class Reverse{
     return result;
   }
   public static void testReverse(String s, String expected){
-    System.out.println("expected: " + expected + " result: " + reverse(s));
+    System.out.println("original: " + s + ", expected: " + expected + " result: " + reverse(s));
     if(reverse(s).equals(expected)){
       System.out.println(":)");
     }else{

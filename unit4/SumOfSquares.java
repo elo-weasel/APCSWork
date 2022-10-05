@@ -11,7 +11,7 @@ class SumOfSquares{
     return result;
   }
   public static void testSum(int n, int expected){
-    System.out.println("expected: " + expected + " result: " + sum(n));
+    System.out.println("sum of: " + n + ", expected: " + expected + " result: " + sum(n));
     if(sum(n) == expected){
       System.out.println(":)");
     }else{

@@ -13,8 +13,8 @@ class StringSplosion{
   }
   public static void testStringSplosion(String s, String expected){
     String r = stringSplosion(s);
-    System.out.println("expected: " + expected + " result: " + r);
-    if(r.equals(expected)){
+    System.out.println("string: " + s + ", expected: " + expected + " result: " + stringSplosion(s));
+    if(stringSplosion(s).equals(expected)){
       System.out.println(":)");
     }else{
       System.out.println(":(");

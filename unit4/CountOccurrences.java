@@ -13,7 +13,7 @@ class CountOccurrences{
     return result;
   }
   public static void testCountOccurrences(String b, String s, int expected){
-    System.out.println("expected: " + expected + " result: " + countOccurrences(b,s));
+    System.out.println("string: " + b + " testing for: " + s + ", expected: " + expected + " result: " + countOccurrences(b,s));
     if(countOccurrences(b,s) == expected){
       System.out.println(":)");
     }else{
