@@ -29,7 +29,7 @@ class CountLucky{
     if(count(nums) == expected){
       System.out.println(":)");
     }else{
-      System.out.println(":()");
+      System.out.println(":(");
     }
     System.out.println();
   }

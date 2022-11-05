@@ -4,16 +4,16 @@ class ZName{
     String[] s2 = {"buzz", "sizzle"};
     String[] s3 = {"zip", "zap"};
 
-    test(s1, 2);
+    test(s1, 7);
     test(s2, 0);
-    test(s3, 2);
+    test(s3, 6);
   }
 
   public static int zs(String[] strs){
     int result = 0;
     for (String s: strs){
       if(s.substring(0,1).equals("z") || s.substring(0,1).equals("Z")){
-        result += 1;
+        result += s.length();
       }
     }
     return result;
@@ -29,7 +29,7 @@ class ZName{
     if(zs(strs) == expected){
       System.out.println(":)");
     }else{
-      System.out.println(":()");
+      System.out.println(":(");
     }
     System.out.println();
   }
