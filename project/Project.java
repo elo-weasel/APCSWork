@@ -24,7 +24,21 @@ public class Project extends PApplet{
     //character selection
     else if (gameState == 1){
       background(0);
-      text("character selection screen", 500, 500);
+      text("character selection screen", 500, 100);
+
+      //boxes
+      drawRounded(360,120,120,120);
+      drawRounded(360,280,120,120);
+      drawRounded(360,440,120,120);
+      drawRounded(520,120,120,120);
+      drawRounded(520,280,120,120);
+      drawRounded(520,440,120,120);
+
+      //p1 selection
+      drawRounded(60, 120, 220, 220);
+
+      //p2 selection
+      drawRounded(700, 120, 220, 220);
     }
 
 
@@ -65,19 +79,19 @@ public class Project extends PApplet{
 
     if (gameState == 3){
       if(key == 'w'){
-        p1.acc.y -= 2;
+        p1.jump();
       }else if(key == 'a'){
-        p1.vel.x = -5;
+        p1.moveLeft();
       }else if(key == 'd'){
-        p1.vel.x = 5;
+        p1.moveRight();
       }
 
       if(keyCode == UP){
-        p2.acc.y -= 2;
+        p2.jump();
       }else if(keyCode == LEFT){
-        p2.vel.x = -5;
+        p2.moveLeft();
       }else if(keyCode == RIGHT){
-        p2.vel.x = 5;
+        p2.moveRight();
       }
     }
   }
@@ -85,17 +99,32 @@ public class Project extends PApplet{
   public void keyReleased(){
     if (gameState == 3){
       if(key == 'a'){
-        p1.vel.x += 5;
+        p1.stopLeft();
       }else if(key == 'd'){
-        p1.vel.x -= 5;
+        p1.stopRight();
       }
 
       if(keyCode == LEFT){
-        p2.vel.x += 5;
+        p2.stopLeft();
       }else if(keyCode == RIGHT){
-        p2.vel.x -= 5;
+        p2.stopRight();
       }
     }
+  }
+
+  //drawing character selection  boxes
+  public void drawRounded(float xPos, float yPos, float width, float height){
+    noStroke();
+    rect(xPos + width/8, yPos + height/8, width*3/4, height*3/4);
+    ellipse(xPos + width/8, yPos + height/8, width/4, height/4);
+    ellipse(xPos + width/8, yPos + height*7/8, width/4, height/4);
+    ellipse(xPos + width*7/8, yPos + height/8, width/4, height/4);
+    ellipse(xPos + width*7/8, yPos + height*7/8, width/4, height/4);
+
+    rect(xPos + width/8, yPos, width*3/4, height/4);
+    rect(xPos + width/8, yPos + height*3/4, width*3/4, height/4);
+    rect(xPos, yPos + height/8, width/4, height*3/4);
+    rect(xPos + width*3/4, yPos + height/8, width/4, height*3/4);
   }
 
   public static void main(String args[]){
