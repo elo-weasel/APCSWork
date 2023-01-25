@@ -60,21 +60,6 @@ public class Project extends PApplet{
           ellipse(i*200+200,200,110,110);
         }
       }
-      //boxes
-      /*
-      drawRounded(360,120,120,120);
-      drawRounded(360,280,120,120);
-      drawRounded(360,440,120,120);
-      drawRounded(520,120,120,120);
-      drawRounded(520,280,120,120);
-      drawRounded(520,440,120,120);
-      */
-
-      //p1 selection
-      //drawRounded(60, 120, 220, 220);
-
-      //p2 selection
-      //drawRounded(700, 120, 220, 220);
     }
 
 
