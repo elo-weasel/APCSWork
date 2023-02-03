@@ -1,5 +1,25 @@
 public class Arrays{
   public static void main(String[] args){
+    int[][] diagonal = new int[10][10];
+    for(int i = 0; i < 10; i++){
+      for(int j = 0; j < 10; j++){
+        if(i == j){
+          diagonal[i][j] = 1;
+        }else{
+          diagonal[i][j] = 0;
+        }
+      }
+    }
+
+    for(int[] ints : diagonal){
+      for(int i : ints){
+        System.out.print(i + " ");
+      }
+      System.out.println();
+    }
+
+    System.out.println();
+
     String[][] words = new String[4][2];
 
     double[][] ds = new double[5][5];

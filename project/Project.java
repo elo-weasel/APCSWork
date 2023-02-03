@@ -7,7 +7,8 @@ public class Project extends PApplet{
   int map = 0;
   Character p1 = new Character(this, 4);
   Character p2 = new Character(this, 4);
-  Platform p = new Platform(this, 500,300,100,10);
+  Platform platform1 = new Platform(this, 500,300,100,10);
+  Platform platform2 = new Platform(this, 700,200,50,10);
 
   public void settings(){
     //size(1000, 600);
@@ -22,6 +23,7 @@ public class Project extends PApplet{
     //menu
     if (gameState == 0){
       background(0);
+      fill(255);
       text("press space to start", 500, 500);
     }
 
@@ -29,6 +31,7 @@ public class Project extends PApplet{
     //character selection
     else if (gameState == 1){
       background(0);
+      fill(255);
       text("character selection screen", 500, 100);
 
       for(int i = 0; i <= 3; i += 1){
@@ -66,20 +69,26 @@ public class Project extends PApplet{
     //map selection
     else if (gameState == 2){
       background(0);
+      fill(255);
       text("map selection screen", 500, 50);
 
-      fill(150);
       noStroke();
+      fill(0, 70, 84, 100);
       rect(width/13, height/6, width*3/13, height*4/6);
+      fill(44, 74, 32, 100);
       rect(width*5/13, height/6, width*3/13, height*4/6);
+      fill(110, 0, 16, 100);
       rect(width*9/13, height/6, width*3/13, height*4/6);
 
       fill(255);
       if(map == 0){
+        fill(0, 70, 84);
         rect(width/19, height/8, width*5/19, height*3/4);
       }else if(map == 1){
+        fill(44, 74, 32);
         rect(width*7/19, height/8, width*5/19, height*3/4);
       }else if (map == 2){
+        fill(110, 0, 16);
         rect(width*13/19, height/8, width*5/19, height*3/4);
       }
     }
@@ -88,20 +97,25 @@ public class Project extends PApplet{
     //gameplay
     else if (gameState == 3){
       background(0);
+      fill(255);
       text("gameplay", 500, 500);
 
       p1.display();
       p2.display();
-      p1.checkPlatform(p);
-      p2.checkPlatform(p);
+      p1.checkPlatform(platform1);
+      p2.checkPlatform(platform1);
+      p1.checkPlatform(platform2);
+      p2.checkPlatform(platform2);
 
-      p.display();
+      platform1.display(map);
+      platform2.display(map);
     }
 
 
     //win/lose
     else if (gameState == 4){
       background(0);
+      fill(255);
       text("win/lose", 500, 500);
     }
   }
