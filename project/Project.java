@@ -100,15 +100,15 @@ public class Project extends PApplet{
       fill(255);
       text("gameplay", 500, 500);
 
+      platform1.display(map);
+      platform2.display(map);
+
       p1.display();
       p2.display();
       p1.checkPlatform(platform1);
       p2.checkPlatform(platform1);
       p1.checkPlatform(platform2);
       p2.checkPlatform(platform2);
-
-      platform1.display(map);
-      platform2.display(map);
     }
 
 

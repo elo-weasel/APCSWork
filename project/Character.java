@@ -11,6 +11,7 @@ public class Character{
     doubleJumping = false;
     goingDown = false;
     onPlatform = false;
+    health = 100;
   }
 
   public void display(){
@@ -121,4 +122,5 @@ public class Character{
   private PVector pos;
   private boolean goingDown;
   private boolean onPlatform;
+  private int health;
 }
