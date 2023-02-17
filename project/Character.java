@@ -1,9 +1,8 @@
 import processing.core.*;
 
 public class Character{
-  public Character(PApplet p, int character){
+  public Character(PApplet p, boolean facingRight){
     this.p = p;
-    this.character = character;
     acc = new PVector(0,0);
     vel = new PVector(0,0);
     pos = new PVector(500,400);
@@ -12,10 +11,13 @@ public class Character{
     goingDown = false;
     onPlatform = false;
     health = 100;
+    this.facingRight = facingRight;
   }
 
-  public void display(){
+  //updates and draws character
+  public void display(int character){
     vel.add(acc);
+    //pos.x = 500;
     pos.add(vel);
 
     if(vel.y > 0){
@@ -64,9 +66,10 @@ public class Character{
     p.ellipse(pos.x, pos.y, 10, 10);
   }
 
-  public boolean getJumpState(){
-    return doubleJumping;
-  }
+  public boolean getJumpState(){return doubleJumping;}
+  public PVector getPos(){return pos;}
+  public PVector getVel(){return vel;}
+  public boolean getFacingRight(){return facingRight;}
 
   public void jump(){
     if(jumping == true){
@@ -81,10 +84,12 @@ public class Character{
 
   public void moveLeft(){
     vel.x = -5;
+    facingRight = false;
   }
 
   public void moveRight(){
     vel.x = 5;
+    facingRight = true;
   }
 
   public void stopLeft(){
@@ -109,12 +114,7 @@ public class Character{
     }
   }
 
-  public void setCharacter(int c){
-    character = c;
-  }
-
   private PApplet p;
-  private int character;
   private boolean jumping;
   private boolean doubleJumping;
   private PVector acc;
@@ -123,4 +123,5 @@ public class Character{
   private boolean goingDown;
   private boolean onPlatform;
   private int health;
+  private boolean facingRight;
 }

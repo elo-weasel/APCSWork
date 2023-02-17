@@ -1,14 +1,17 @@
 import processing.core.*;
+import java.util.*;
 
 public class Project extends PApplet{
-  int gameState = 0;
+  int gameState = 3;
   int p1Character = 0;
   int p2Character = 3;
   int map = 0;
-  Character p1 = new Character(this, 4);
-  Character p2 = new Character(this, 4);
+  Character p1 = new Character(this, true);
+  Character p2 = new Character(this, false);
+  ArrayList<Platform> platforms = new ArrayList<Platform>();
   Platform platform1 = new Platform(this, 500,300,100,10);
   Platform platform2 = new Platform(this, 700,200,50,10);
+  ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
   public void settings(){
     //size(1000, 600);
@@ -16,10 +19,19 @@ public class Project extends PApplet{
   }
 
   public void setup(){
-
+    platforms.add(platform1);
+    platforms.add(platform2);
   }
 
   public void draw(){
+    //controlling # of projectiles
+    for(int i = 0; i < projectiles.size(); i++){
+      if(projectiles.get(i).outOfScreen() == true){
+        projectiles.remove(i);
+        i -= 1;
+      }
+    }
+
     //menu
     if (gameState == 0){
       background(0);
@@ -100,15 +112,19 @@ public class Project extends PApplet{
       fill(255);
       text("gameplay", 500, 500);
 
-      platform1.display(map);
-      platform2.display(map);
+      for(Platform p: platforms){
+        p.display(map);
+        p1.checkPlatform(p);
+        p2.checkPlatform(p);
+      }
 
-      p1.display();
-      p2.display();
-      p1.checkPlatform(platform1);
-      p2.checkPlatform(platform1);
-      p1.checkPlatform(platform2);
-      p2.checkPlatform(platform2);
+      for(Projectile p: projectiles){
+        p.update();
+        //System.out.println(p.pVel);
+      }
+
+      p1.display(p1Character);
+      p2.display(p2Character);
     }
 
 
@@ -193,11 +209,6 @@ public class Project extends PApplet{
           }
         }
       }
-
-      if(key == ' '){
-        p1.setCharacter(p1Character);
-        p2.setCharacter(p2Character);
-      }
     }
 
     //map selection
@@ -219,6 +230,7 @@ public class Project extends PApplet{
 
     //gameplay
     if (gameState == 3){
+      //p1 movement
       if(key == 'w' && p1.getJumpState() == false){
         p1.jump();
       }else if(key == 'a'){
@@ -227,12 +239,25 @@ public class Project extends PApplet{
         p1.moveRight();
       }
 
+      //p1 attacks
+      if(key == 'q'){
+        Projectile projectile = new Projectile(this, p1.getPos(), p1.getVel(), p1.getFacingRight());
+        projectiles.add(projectile);
+      }
+
+      //p2 movement
       if(keyCode == UP && p2.getJumpState() == false){
         p2.jump();
       }else if(keyCode == LEFT){
         p2.moveLeft();
       }else if(keyCode == RIGHT){
         p2.moveRight();
+      }
+
+      //p2 attacks
+      if(key == 'l'){
+        Projectile projectile = new Projectile(this, p2.getPos(), p1.getVel(), p2.getFacingRight());
+        projectiles.add(projectile);
       }
     }
   }
@@ -251,21 +276,6 @@ public class Project extends PApplet{
         p2.stopRight();
       }
     }
-  }
-
-  //drawing character selection  boxes
-  public void drawRounded(float xPos, float yPos, float width, float height){
-    noStroke();
-    rect(xPos + width/8, yPos + height/8, width*3/4, height*3/4);
-    ellipse(xPos + width/8, yPos + height/8, width/4, height/4);
-    ellipse(xPos + width/8, yPos + height*7/8, width/4, height/4);
-    ellipse(xPos + width*7/8, yPos + height/8, width/4, height/4);
-    ellipse(xPos + width*7/8, yPos + height*7/8, width/4, height/4);
-
-    rect(xPos + width/8, yPos, width*3/4, height/4);
-    rect(xPos + width/8, yPos + height*3/4, width*3/4, height/4);
-    rect(xPos, yPos + height/8, width/4, height*3/4);
-    rect(xPos + width*3/4, yPos + height/8, width/4, height*3/4);
   }
 
   public static void main(String[] args){
