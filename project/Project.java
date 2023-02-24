@@ -29,6 +29,14 @@ public class Project extends PApplet{
       if(projectiles.get(i).outOfScreen() == true){
         projectiles.remove(i);
         i -= 1;
+      }else if(projectiles.get(i).touchingCharacter(p1) && projectiles.get(i).belongsTo() == 2){
+        p1.hit();
+        projectiles.remove(i);
+        i -= 1;
+      }else if(projectiles.get(i).touchingCharacter(p2) && projectiles.get(i).belongsTo() == 1){
+        p2.hit();
+        projectiles.remove(i);
+        i -= 1;
       }
     }
 
@@ -125,6 +133,9 @@ public class Project extends PApplet{
 
       p1.display(p1Character);
       p2.display(p2Character);
+
+      text("p1 health: " + p1.getHealth(), 30,30);
+      text("p2 health: " + p2.getHealth(),30,50);
     }
 
 
@@ -241,7 +252,7 @@ public class Project extends PApplet{
 
       //p1 attacks
       if(key == 'q'){
-        Projectile projectile = new Projectile(this, p1.getPos(), p1.getVel(), p1.getFacingRight());
+        Projectile projectile = new Projectile(this, p1.getPos(), p1.getVel(), p1.getFacingRight(), 1, -1);
         projectiles.add(projectile);
       }
 
@@ -256,7 +267,7 @@ public class Project extends PApplet{
 
       //p2 attacks
       if(key == 'l'){
-        Projectile projectile = new Projectile(this, p2.getPos(), p1.getVel(), p2.getFacingRight());
+        Projectile projectile = new Projectile(this, p2.getPos(), p1.getVel(), p2.getFacingRight(), 2, 0);
         projectiles.add(projectile);
       }
     }

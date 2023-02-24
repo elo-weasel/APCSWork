@@ -10,7 +10,7 @@ public class Character{
     doubleJumping = false;
     goingDown = false;
     onPlatform = false;
-    health = 100;
+    health = 10;
     this.facingRight = facingRight;
   }
 
@@ -63,13 +63,18 @@ public class Character{
       p.fill(255,100,255);
       p.stroke(255,100,255);
     }
-    p.ellipse(pos.x, pos.y, 10, 10);
+    if(facingRight == true){
+      p.triangle(pos.x-6, pos.y-8, pos.x-6, pos.y+8, pos.x+6, pos.y);
+    }else{
+      p.triangle(pos.x+6, pos.y-8, pos.x+6, pos.y+8, pos.x-6, pos.y);
+    }
   }
 
   public boolean getJumpState(){return doubleJumping;}
   public PVector getPos(){return pos;}
   public PVector getVel(){return vel;}
   public boolean getFacingRight(){return facingRight;}
+  public int getHealth(){return health;}
 
   public void jump(){
     if(jumping == true){
@@ -112,6 +117,10 @@ public class Character{
     }else{
       onPlatform = false;
     }
+  }
+
+  public void hit(){
+    health -= 1;
   }
 
   private PApplet p;
