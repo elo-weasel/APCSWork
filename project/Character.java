@@ -5,7 +5,7 @@ public class Character{
     this.p = p;
     acc = new PVector(0,0);
     vel = new PVector(0,0);
-    pos = new PVector(500,400);
+    pos = new PVector(p.width/2,p.height/3*2);
     jumping = false;
     doubleJumping = false;
     goingDown = false;
@@ -17,7 +17,6 @@ public class Character{
   //updates and draws character
   public void display(int character){
     vel.add(acc);
-    //pos.x = 500;
     pos.add(vel);
 
     if(vel.y > 0){
@@ -26,15 +25,16 @@ public class Character{
     }
 
     //limits x velocity
-    if(vel.x > 5 || vel.x < -5){
+    if(vel.x > (p.width/100/6*5) || vel.x < -(p.width/100/6*5)){
       vel.x /= 2;
     }
 
     //applies and stops gravity
-    if(pos.y < 400 && onPlatform == false){
-      acc.y += 0.15;
-    }else if(pos.y > 400){
-      pos.y = 400;
+    if(pos.y < p.height/3*2 && onPlatform == false){
+      acc.y += (p.height/(float)6000);
+
+    }else if(pos.y > p.height/3*2){
+      pos.y = p.height/3*2;
       acc.y = 0;
       vel.y = 0;
       jumping = false;
@@ -64,9 +64,9 @@ public class Character{
       p.stroke(255,100,255);
     }
     if(facingRight == true){
-      p.triangle(pos.x-6, pos.y-8, pos.x-6, pos.y+8, pos.x+6, pos.y);
+      p.triangle(pos.x-(p.width/100), pos.y-(p.width/100/3*4), pos.x-(p.width/100), pos.y+(p.width/100/3*4), pos.x+(p.width/100), pos.y);
     }else{
-      p.triangle(pos.x+6, pos.y-8, pos.x+6, pos.y+8, pos.x-6, pos.y);
+      p.triangle(pos.x+(p.width/100), pos.y-(p.width/100/3*4), pos.x+(p.width/100), pos.y+(p.width/100/3*4), pos.x-(p.width/100), pos.y);
     }
   }
 
@@ -76,38 +76,42 @@ public class Character{
   public boolean getFacingRight(){return facingRight;}
   public int getHealth(){return health;}
 
+  public void resetHealth(){
+    health = 10;
+  }
+
   public void jump(){
     if(jumping == true){
       doubleJumping = true;
     }else{
       jumping = true;
     }
-    vel.y = 0;
-    acc.y = -(float)1.5;
+    vel.y = -(float)(p.height/(float)50);
+    acc.y = 0;
     onPlatform = false;
   }
 
   public void moveLeft(){
-    vel.x = -5;
+    vel.x = -(p.width/100/6*5);
     facingRight = false;
   }
 
   public void moveRight(){
-    vel.x = 5;
+    vel.x = (p.width/100/6*5);
     facingRight = true;
   }
 
   public void stopLeft(){
-    vel.x += 5;
+    vel.x += (p.width/100/6*5);
   }
 
   public void stopRight(){
-    vel.x -= 5;
+    vel.x -= (p.width/100/6*5);
   }
 
   public void checkPlatform(Platform platform){
-    if(goingDown == true && pos.x > platform.getXPos() - 5 && pos.x < platform.getXPos() + platform.getWidth() + 5 && pos.y + vel.y >= platform.getYPos() - 5 && pos.y <= platform.getYPos()){
-      pos.y = platform.getYPos() - 5;
+    if(goingDown == true && pos.x > platform.getXPos() - (p.width/100/6*5) && pos.x < platform.getXPos() + platform.getWidth() + (p.width/100/6*5) && pos.y + vel.y >= platform.getYPos() - (p.width/100/6*5) && pos.y <= platform.getYPos()){
+      pos.y = platform.getYPos() - (p.width/100/6*5);
       acc.y = 0;
       vel.y = 0;
       onPlatform = true;

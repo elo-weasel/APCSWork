@@ -11,19 +11,10 @@ public class Projectile{
     this.c = c;
     this.arc = arc;
 
-    /*if(facingRight == true){
-      pVel = new PVector(2, 0);
-    }else{
-      pVel = new PVector(-2, 0);
-    }
-    pAcc = new PVector(0, 0.15f);*/
-
     if(pFacingRight == true){
-      pVel = new PVector(7 + 10 * vel.x, arc);
-      //pVel = new PVector(10 + 10 * vel.x,-1);
+      pVel = new PVector((float)1.5*(p.width/100/6*5), arc);
     }else{
-      //pVel = new PVector(-10 + 10 * vel.x,-1);
-      pVel = new PVector(-7 + 10 * vel.x, arc);
+      pVel = new PVector(-(float)1.5*(p.width/100/6*5), arc);
     }
 
   }
@@ -33,7 +24,8 @@ public class Projectile{
     pVel.y -= arc/30;
     pPos.add(pVel);
 
-    p.ellipse(pPos.x,pPos.y,8,8);
+    p.fill(255);
+    p.ellipse(pPos.x,pPos.y,p.width/100,p.width/100);
   }
 
   public boolean outOfScreen(){
@@ -41,7 +33,7 @@ public class Projectile{
   }
 
   public boolean touchingCharacter(Character character){
-    if(pPos.x-6 < character.getPos().x+6 && pPos.x+6 > character.getPos().x-6 && pPos.y - 4 < character.getPos().y+6 && pPos.y + 4 > character.getPos().y-6){
+    if(pPos.x-(p.width/100) < character.getPos().x+(p.width/100) && pPos.x+(p.width/100) > character.getPos().x-(p.width/100) && pPos.y - (p.width/200) < character.getPos().y+(p.width/100) && pPos.y + (p.width/200) > character.getPos().y-(p.width/100)){
       return true;
     }else{
       return false;
@@ -49,9 +41,8 @@ public class Projectile{
   }
 
   public int belongsTo(){return c;}
-
   public PVector getPos(){return pPos;}
-  public float getSize(){return 8;}
+  public float getSize(){return p.width/100;}
 
   private PApplet p;
   private PVector pPos;
