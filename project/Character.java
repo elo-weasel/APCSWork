@@ -1,27 +1,32 @@
 import processing.core.*;
 
 public class Character{
-  public Character(PApplet p, boolean facingRight){
+  public Character(PApplet p, boolean facingRight, int c){
     this.p = p;
     acc = new PVector(0,0);
     vel = new PVector(0,0);
-    pos = new PVector(p.width/2,p.height/3*2);
+    if(c == 1){
+      pos = new PVector(p.width/7,p.height*10/11);
+    }else if(c == 2){
+      pos = new PVector(p.width*6/7,p.height*10/11);
+    }
     jumping = false;
     doubleJumping = false;
     goingDown = false;
     onPlatform = false;
-    health = 10;
+    health = 5;
     this.facingRight = facingRight;
+
+    gravity = (p.height/(float)6000);
   }
 
   //updates and draws character
-  public void display(int character){
+  public void display(PImage i){
     vel.add(acc);
     pos.add(vel);
 
     if(vel.y > 0){
       goingDown = true;
-      jumping = true;
     }
 
     //limits x velocity
@@ -30,11 +35,11 @@ public class Character{
     }
 
     //applies and stops gravity
-    if(pos.y < p.height/3*2 && onPlatform == false){
-      acc.y += (p.height/(float)6000);
+    if(pos.y < p.height*10/11 && onPlatform == false){
+      acc.y += gravity;
 
-    }else if(pos.y > p.height/3*2){
-      pos.y = p.height/3*2;
+    }else if(pos.y > p.height*10/11){
+      pos.y = p.height*10/11;
       acc.y = 0;
       vel.y = 0;
       jumping = false;
@@ -49,25 +54,28 @@ public class Character{
       pos.x = p.width;
     }
 
-    //character color and draw
-    if (character == 0){
-      p.fill(255);
-      p.stroke(255);
-    }else if (character == 1){
-      p.fill(255,255,100);
-      p.stroke(255,255,100);
-    }else if (character == 2){
-      p.fill(100,255,255);
-      p.stroke(100,255,255);
-    }else if (character == 3){
-      p.fill(255,100,255);
-      p.stroke(255,100,255);
-    }
+    p.imageMode(p.CENTER);
     if(facingRight == true){
-      p.triangle(pos.x-(p.width/100), pos.y-(p.width/100/3*4), pos.x-(p.width/100), pos.y+(p.width/100/3*4), pos.x+(p.width/100), pos.y);
+      p.image(i, pos.x, pos.y, p.width/15, p.width/15);
     }else{
-      p.triangle(pos.x+(p.width/100), pos.y-(p.width/100/3*4), pos.x+(p.width/100), pos.y+(p.width/100/3*4), pos.x-(p.width/100), pos.y);
+      p.pushMatrix();
+      p.translate(pos.x, pos.y);
+      p.scale(-1, 1);
+      p.image(i, 0, 0, p.width/15, p.width/15);
+      p.popMatrix();
     }
+  }
+
+  public boolean running(){
+    return goingDown == false && vel.x != 0 && jumping == false;
+  }
+
+  public boolean jumps(){
+    return jumping;
+  }
+
+  public void higherJumps(){
+    gravity = p.height/(float)8000;
   }
 
   public boolean getJumpState(){return doubleJumping;}
@@ -77,7 +85,7 @@ public class Character{
   public int getHealth(){return health;}
 
   public void resetHealth(){
-    health = 10;
+    health = 5;
   }
 
   public void jump(){
@@ -110,8 +118,8 @@ public class Character{
   }
 
   public void checkPlatform(Platform platform){
-    if(goingDown == true && pos.x > platform.getXPos() - (p.width/100/6*5) && pos.x < platform.getXPos() + platform.getWidth() + (p.width/100/6*5) && pos.y + vel.y >= platform.getYPos() - (p.width/100/6*5) && pos.y <= platform.getYPos()){
-      pos.y = platform.getYPos() - (p.width/100/6*5);
+    if(goingDown == true && pos.x > platform.getXPos() - (p.width/50/6*5) && pos.x < platform.getXPos() + platform.getWidth() + (p.width/50/6*5) && pos.y + vel.y >= platform.getYPos() - (p.width/50/6*5) && pos.y <= platform.getYPos()){
+      pos.y = platform.getYPos() - (p.width/50/6*5);
       acc.y = 0;
       vel.y = 0;
       onPlatform = true;
@@ -127,6 +135,10 @@ public class Character{
     health -= 1;
   }
 
+  public void setHealth(int h){
+    health = h;
+  }
+
   private PApplet p;
   private boolean jumping;
   private boolean doubleJumping;
@@ -137,4 +149,5 @@ public class Character{
   private boolean onPlatform;
   private int health;
   private boolean facingRight;
+  private float gravity;
 }
